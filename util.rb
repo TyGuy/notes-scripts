@@ -1,4 +1,7 @@
 require 'yaml'
+require 'dotenv'
+
+Dotenv.load
 
 def today_string
   Time.now.strftime('%A %b %d, %Y')
@@ -23,6 +26,19 @@ def underscored_date
   Time.now.strftime('%Y_%m_%d_%a').downcase
 end
 
-def open_file
-  # TODO: here
+def create_file_name(note_type, path)
+  raise StandardError, "Must define ENV['BASE_NOTES_DIR']" unless ENV['BASE_NOTES_DIR']
+
+  dir = File.join(ENV['BASE_NOTES_DIR'], path)
+  dir = File.expand_path(dir)
+
+  File.join(dir, "#{note_type}_#{underscored_date}.md")
+end
+
+def open_file(file_name)
+  cmd = "open #{file_name}"
+  cmd += " -a #{ENV['TEXT_EDITOR']}" if ENV['TEXT_EDITOR']
+
+  puts "=> #{cmd}"
+  `#{cmd}`
 end

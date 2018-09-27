@@ -1,11 +1,9 @@
 require_relative './util'
 
-STANDUP_NOTES_DIR = ENV['STANDUP_NOTES_DIR'] || '/Users/tylerdavis/notes/solstice/daily/standups'
-
+notes_path = ENV['STANDUP_NOTES_PATH'] || 'daily/standup'
+note_type = 'standup'
 title = title_today('Standup')
 tags = %w[notes daily solstice standups]
-
-underscored_date
 
 people = %w[Ugwem Cole Tyler Ekundayo]
 
@@ -31,8 +29,10 @@ text = <<~TXT
   #{standup_template_content}
 TXT
 
-file_name = "#{STANDUP_NOTES_DIR}/standup_#{underscored_date}.md"
+file_name = create_file_name(note_type, notes_path)
 
 write_file(file_name, text)
 
 puts "created standup file at: #{file_name}"
+
+open_file(file_name)

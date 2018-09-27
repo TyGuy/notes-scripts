@@ -1,11 +1,11 @@
 require_relative './util'
 
-DAILY_NOTES_DIR = ENV['DAILY_NOTES_DIR'] || '/Users/tylerdavis/notes/solstice/daily'
-
+notes_path = ENV['DAILY_NOTES_PATH'] || 'daily'
+note_type = 'daily'
 title = title_today('Daily Notes')
 tags = %w[notes daily solstice todo]
 
-template_markdown_string = <<~MDF
+text = <<~MDF
   #{front_matter_yaml(title, tags)}
 
   # #{title}
@@ -20,10 +20,12 @@ template_markdown_string = <<~MDF
   {{yest}}
 MDF
 
-# puts template_markdown_string
+# puts text
 
-file_name = "#{DAILY_NOTES_DIR}/daily_#{underscored_date}.md"
+file_name = create_file_name(note_type, notes_path)
 
-write_file(file_name, template_markdown_string)
+write_file(file_name, text)
 
-puts "created standup file at: #{file_name}"
+puts "created #{note_type} file at: #{file_name}"
+
+open_file(file_name)
