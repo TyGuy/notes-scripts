@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dotenv (2.5.0)
+    dotenv (2.7.5)
 
 PLATFORMS
   ruby
@@ -9,5 +9,8 @@ PLATFORMS
 DEPENDENCIES
   dotenv
 
+RUBY VERSION
+   ruby 2.7.1p83
+
 BUNDLED WITH
-   1.13.7
+   2.1.4
