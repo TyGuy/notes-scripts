@@ -1,10 +1,15 @@
+require_relative './environment'
 require 'yaml'
-require 'dotenv'
-
-Dotenv.load
 
 def today_string
   Time.now.strftime('%A %b %d, %Y')
+end
+
+def nearest_15_min_string
+  now = Time.now
+  fifteens = (now.min / 15).round
+  nearest_fifteen = now.beginning_of_hour + (fifteens * 15).minutes
+  nearest_fifteen.strftime('%I:%M%P')
 end
 
 def title_today(base_title)

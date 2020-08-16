@@ -6,7 +6,8 @@ note_type = 'daily'
 title = title_today('Daily Notes')
 tags = %w[notes daily solstice shyft todo]
 
-text = Templates::DailyNoteV2.template(title: title, tags: tags)
+# text = Templates::DailyNoteV2.template(title: title, tags: tags)
+text = Templates::DailyNoteV3.template(title: title, tags: tags)
 # puts text
 
 file_name = create_file_name(note_type, notes_path)
