@@ -2,7 +2,11 @@ require_relative './environment'
 require 'yaml'
 
 def today_string
-  Time.now.strftime('%A %b %d, %Y')
+  date_string(Time.now)
+end
+
+def date_string(time)
+  time.strftime('%A %b %d, %Y')
 end
 
 def nearest_15_min_string
@@ -16,6 +20,14 @@ def title_today(base_title)
   "#{base_title} for #{today_string}"
 end
 
+def weekly_title(week_start)
+  "Weekly notes for week of #{date_string(week_start)}"
+end
+
+def week_start
+  Time.now.sunday? ? (Time.now + 1.day).beginning_of_week : Time.now.beginning_of_week
+end
+
 def front_matter_yaml(title, tags)
   {
     'title' => title,
@@ -27,8 +39,9 @@ def write_file(file_name, content)
   File.open(file_name, 'w+') { |file| file.write(content) }
 end
 
-def underscored_date
-  Time.now.strftime('%Y_%m_%d_%a').downcase
+def underscored_date(note_type)
+  time = note_type == 'weekly' ? week_start : Time.now
+  time.strftime('%Y_%m_%d_%a').downcase
 end
 
 def create_file_name(note_type, path)
@@ -37,7 +50,7 @@ def create_file_name(note_type, path)
   dir = File.join(ENV['BASE_NOTES_DIR'], path)
   dir = File.expand_path(dir)
 
-  File.join(dir, "#{note_type}_#{underscored_date}.md")
+  File.join(dir, "#{note_type}_#{underscored_date(note_type)}.md")
 end
 
 def open_file(file_name)
